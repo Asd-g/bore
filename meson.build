@@ -1,6 +1,6 @@
 project('bore', 'c', 'cpp',
   version : '1',
-  default_options : ['c_std=c17', 'cpp_std=c++17', 'warning_level=3', 'buildtype=release', 'b_ndebug=if-release'])
+  default_options : ['c_std=c17', 'cpp_std=c++20', 'warning_level=3', 'buildtype=release', 'b_ndebug=if-release'])
 
 static_link_gsl = get_option('static_gsl')
 
@@ -32,10 +32,11 @@ if libtype in ['vapoursynth', 'both']
 endif
 
 if libtype in ['avisynth', 'both']
-    sources += ['src/avs_bore.c']
-    
-    cc = meson.get_compiler('c')
-    deps += cc.find_library('avisynth', dirs : meson.current_source_dir())
+    sources += [
+        'src/avs_bore.cpp',
+        'src/avs_dynamic_c_api.cpp',
+        'src/avs_dynamic_c_api.hpp'
+    ]
 endif
 
 gsl_dep = dependency('gsl', static : static_link_gsl)
