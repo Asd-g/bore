@@ -26,9 +26,12 @@ install_dir = ''
 
 if libtype in ['vapoursynth', 'both']
     sources += ['src/bore.c']
-    deps += dependency('vapoursynth', version: '>=55').partial_dependency(compile_args : true, includes : true)
-    install = true
-    install_dir += join_paths(deps[0].get_pkgconfig_variable('libdir'), 'vapoursynth')
+    vs_installation = get_option('vs_install')
+    if vs_installation
+        deps += dependency('vapoursynth', version: '>=55').partial_dependency(compile_args : true, includes : true)
+        install = true
+        install_dir += join_paths(deps[0].get_pkgconfig_variable('libdir'), 'vapoursynth')
+    endif
 endif
 
 if libtype in ['avisynth', 'both']
